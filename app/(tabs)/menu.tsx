@@ -1,10 +1,13 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import useTheme from '../../hooks/useTheme'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
  
  export default function HomePage() {
+  const { toggleDarkMode } = useTheme();
    return (
      <View style={styles.container}>
-       <Text style={styles.text}>This is the menu</Text>
+       <TouchableOpacity onPress={toggleDarkMode}>
+        <Text>Change the mode</Text>
+       </TouchableOpacity>
      </View>
    );
  }

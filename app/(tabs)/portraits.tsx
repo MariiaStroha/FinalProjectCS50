@@ -1,29 +1,48 @@
-import React, { useState} from 'react';
+import { useState} from 'react';
 import { Link } from 'expo-router';
-import { StyleSheet, Text, FlatList, Pressable, View } from 'react-native';
+import { Text, FlatList, Pressable, View, TextInput} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {Portrait, portraits} from '../../portraits';
+import { createStyles  } from '../../assets/images/styles/styles'
 import { SearchBar } from '@rneui/themed';
+import { Search } from 'lucide-react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import useTheme from '../../hooks/useTheme';
+
+
+
+/*
 
 const renderItems = ({item}:{item: Portrait}) =>{
   return(
+    <View style={styles.buttonWrapper}>
+            <LinearGradient
+              colors={colors.gradients.surface}
+              style={styles.button}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 1}}
+              ></LinearGradient>
       <Link
-      style={styles.link}
        href={{
           pathname: '../[id]',
           params: { id: item.id }
         }}
         asChild>
           <Pressable >
-              <Text style={styles.container}>{ item.name} </Text>
+              <Text>{ item.name} </Text>
           </Pressable>
         </Link>
+      </View>
   )
 }
 
 
 
 export default function DataBase(){
+  const { colors } = useTheme();
+
+  const styles = createStyles(colors);
+
   const[search, setSearch] = useState('');
 
   const data: Portrait[] = portraits;
@@ -41,9 +60,11 @@ export default function DataBase(){
 
   return(
     <>
-     <SafeAreaView style={styles.container}>
-       <View style={styles.search}>
-        <SearchBar
+     <SafeAreaView>
+      <LinearGradient colors={colors.gradients.background} style={styles.container}>
+       <View>
+        <Search/>
+        <TextInput
           placeholder="Знайти портрет"
           onChangeText={update}
           value={search}
@@ -54,38 +75,10 @@ export default function DataBase(){
           data={result }
           renderItem={renderItems}
         />}
+        </LinearGradient>
          </SafeAreaView>
       </>
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    
-  },
-  link: {
-    backgroundColor: '#48cae4',
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
-    borderColor: 'black',
-    borderWidth: 3,
-    padding: 20,
-    margin: 20,
-  },
-  search:{
-    width: '80%',
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25
-  }
-});
+*/

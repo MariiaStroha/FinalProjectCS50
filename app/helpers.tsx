@@ -50,16 +50,33 @@ export const leavePage = (navigation: Omit<NavigationProp<ReactNavigation.RootPa
 
     const store = async() => {
       for(const item of doneThisSess){
-        if(isPortrait(item))
+        if(isPortrait(item)){
+          try{
             await storeLearned(item.id)
-        else
+          } catch(e){console.log(e)}
+        }
+        else{
+          try{
             await updateLearned(item.id, doneThisSess as Item[])
-    }
-    navigation.dispatch(e.data.action)
-  }
+          } catch(e){console.log(e)}
+        }
+    }}
+    // Stores everything to async storage
+    await store();
 
-  // then add the same function to work when app goes to the background
-  store();
+    // Cleans up the listener so that the function doesn't run forever
+    unsubscribed();
+  
+  // Lets the user leave the page
+    navigation.dispatch(e.data.action)
   })
   return unsubscribed
 }
+
+// Returns the formatted date string(date - today)
+export const getDate = (date = new Date()) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};

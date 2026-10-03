@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState, useRef} from 'react';
 import { Link } from 'expo-router';
-import { StyleSheet, Text, Pressable, View } from 'react-native';
-
+import { Text, Pressable, View, AppState } from 'react-native';
+import { loadStreak, resetStreak, Streak } from "../async_functions";
+import { getDate } from "../helpers";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from 'expo-router'
+import useTheme from '../../hooks/useTheme';
+import { createStyles  } from '../../assets/images/styles/styles'
+import { LinearGradient } from 'expo-linear-gradient';
+import { Eye } from 'lucide-react-native';
+import { GraduationCap} from 'lucide-react-native';
  
 
 const get = async () => {
@@ -20,56 +27,142 @@ const get = async () => {
  }  
 }
 
-  
 export default function HomePage() {
+
+  const { colors } = useTheme();
+
+  const homeStyles = createStyles(colors);
+
+  const appState = useRef(AppState.currentState);
+
+  // Stores the user's streak
+  const [currentStreak, setCurrentStreak] = useState<Streak | null>(null);
+
+  // This use state triggers a rerender only when the streak needs to be reset
+  // It's a simple integer and iy updates(+ 1) when reset is needed
+  const[needReset, setNeedReset] = useState(0)
+
+  // This useEffect monitores app state and triggers a check(if the streak needs to be reset)
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if(nextAppState === 'active'){
+      if(currentStreak !== null && currentStreak.lastReview !== null &&
+         currentStreak.lastReview  < getDate(new Date(Date.now() - 24 * 60 * 60 * 1000))){
+          setNeedReset(number => number + 1)
+         }
+      }
+         appState.current = nextAppState
+      }
+    );
+      return () => {
+        subscription.remove();
+      }}, [currentStreak])
+
+  // Runs each time the screen is focused
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true;
+
+      const handlestreakload = async() =>{
+      let theCurrentStreak: Streak | null = await loadStreak();
+      if (theCurrentStreak !== null){
+        // If the last review was earlier than yesterday the streak resets
+        if(theCurrentStreak.lastReview !== null && theCurrentStreak.lastReview < getDate(new Date(Date.now() - 24 * 60 * 60 * 1000))){
+          await resetStreak();
+          theCurrentStreak.currentStreak = 0;
+        }
+      }
+
+      // When user opens the app for the first time and the object does not exist in async storage yet
+      else{
+        theCurrentStreak = {
+          currentStreak: 0,
+          bestStreak: 0,
+          lastReview: null
+        }
+        // It sets the streak to the initial values and then saves it to async storage
+        try{
+          await AsyncStorage.setItem('streak', JSON.stringify(theCurrentStreak));
+        }
+        catch (e) {
+          console.error(e); 
+        }
+      }
+
+      // Saves the streak to usestate to be rendered
+      if(isActive)
+        setCurrentStreak(theCurrentStreak);
+    }
+
+  handlestreakload();
+
+  return() => {
+    isActive = false;
+  };
+  }, [needReset])
+);
+
+  if(currentStreak !== null){
   return (
-    <>
-    <View style={styles.container}>
-     <Link
-        style={styles.link}
-          href={{
-            pathname: '../learn',
-          }}
-          asChild>
-          <Pressable onPress={get}>
-            <Text style={styles.container}> Learn new portraits </Text>
-          </Pressable>
+      <>
+      <LinearGradient colors={colors.gradients.background} style={homeStyles.container}>
+      <View style={homeStyles.header}>
+        <Text style={homeStyles.title}> Current Streak:  { currentStreak.currentStreak} </Text>
+        <Text style={homeStyles.title}> Best Streak:  { currentStreak.bestStreak }</Text>
+      </View>
+      <View style={homeStyles.buttonWrapper}>
+        <LinearGradient
+          colors={colors.gradients.surface}
+          style={homeStyles.button}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}}
+          >
+          <Link
+            href={{
+              pathname: '../learn',
+            }}
+            asChild>
+            <Pressable style={homeStyles.buttonTextContainer} onPress={get}>
+              <Text style={homeStyles.buttonText}> Learn new portraits </Text>
+            </Pressable>
           </Link>
-         <Link
-        style={styles.link}
-          href={{
-            pathname: '../review',
-          }}
-          asChild>
-          <Pressable onPress={get}>
-            <Text style={styles.container}> Review portraits </Text>
-          </Pressable>
-          </Link>
-           </View>
-          </>   
+            <Eye
+              size={56}
+              style={homeStyles.icon}
+              color={colors.text}
+            />
+        </LinearGradient>
+         <LinearGradient
+          colors={colors.gradients.surface}
+          style={homeStyles.button}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}}
+          >
+          <Link
+            href={{
+              pathname: '../review',
+            }}
+            asChild>
+            <Pressable style={homeStyles.buttonTextContainer} onPress={get}>
+              <Text style={homeStyles.buttonText}> Review portraits </Text>
+            </Pressable>
+            </Link>
+            <GraduationCap
+              size={56}
+              style={homeStyles.icon}
+              color={colors.text}
+            />
+            </LinearGradient>
+            </View>
+            </LinearGradient>
+            </>   
   );
 }
-
-const styles = StyleSheet.create({
-  link: {
-    backgroundColor: '#48cae4',
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
-    borderColor: 'black',
-    borderWidth: 3,
-    padding: 20,
-    margin: 20,},
-
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: 'black',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-});
+else{
+  return(
+    <View>
+      <Text> Loading....</Text>
+    </View>
+  )
+}
+}
