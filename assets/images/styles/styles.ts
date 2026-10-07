@@ -3,23 +3,15 @@ import { StyleSheet } from "react-native";
 
 export const createStyles = (colors: ColorScheme) => {
   const styles = StyleSheet.create({
+    // need
     container: {
       flex: 1,
     },
+    //need
     safeArea: {
       flex: 1,
     },
-    loadingContainer: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    loadingText: {
-      marginTop: 20,
-      fontSize: 18,
-      fontWeight: "500",
-      color: colors.text,
-    },
+    // need
     header: {
       paddingHorizontal: 24,
       paddingVertical: 32,
@@ -31,6 +23,7 @@ export const createStyles = (colors: ColorScheme) => {
       alignItems: "center",
       marginBottom: 20,
     },
+    // need
     icon: {
       width: 65,
       height: 65,
@@ -41,6 +34,7 @@ export const createStyles = (colors: ColorScheme) => {
     titleTextContainer: {
       flex: 1,
     },
+    // need
     title: {
       fontSize: 40,
       fontWeight: "900",
@@ -48,12 +42,58 @@ export const createStyles = (colors: ColorScheme) => {
       marginBottom: 4,
       color: colors.text,
     },
-    subtitle: {
-      fontSize: 17,
+    IDtitle: {
+      fontSize: 23,
       fontWeight: "500",
-      color: colors.textMuted,
+      color: colors.text,
+      letterSpacing: -1,
+      marginLeft: "5%",
+      marginRight: "5%"
     },
     
+    // Learn-review styles
+    // FC - short for Flash Card
+    FCcontainer: {
+     flex: 1,
+     justifyContent: 'center'
+   },
+   FCtitle: {
+     fontSize: 22,
+     fontWeight: 600,
+     margin: 10,
+     color: colors.text
+   },
+
+   FCtext: {
+     fontSize: 18,
+     margin: 10,
+     color: colors.text,
+     textAlign: "center"
+   },
+  
+  card: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    backfaceVisibility: 'hidden',
+    width: '90%',
+    
+  },
+  backText: {
+    position: 'absolute',
+    top: 0,
+    width: '90%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+  },
+
+  buttonContainer: {
+  backgroundColor: colors.primary,
+    padding: 10,
+    borderColor: colors.border,
+    borderWidth: 3
+  },
     
     inputSection: {
       paddingHorizontal: 24,
@@ -101,28 +141,23 @@ export const createStyles = (colors: ColorScheme) => {
       flexGrow: 1,
       justifyContent: "center",
     },
+    // ned
     buttonWrapper: {
       marginVertical: 12,
     },
+    // need
     button: {
       flexDirection: "row",
       alignItems: "flex-start",
       padding: 35,
       borderRadius: 20,
       margin: 15
-      /*shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 4,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 8,
-      elevation: 8,  */
     },
-    
+    // need
     buttonTextContainer: {
       flex: 1,
     },
+    // need
     buttonText: {
       fontSize: 25,
       lineHeight: 24,
@@ -130,9 +165,63 @@ export const createStyles = (colors: ColorScheme) => {
       marginBottom: 16,
       marginTop: 16,
       marginRight: 16,
-    
       color: colors.text,
     },
+
+    // need
+    searchBarWrapper: {
+      margin: 15,
+      flexDirection: "row",
+      borderWidth: 1,
+      borderRadius: 10,
+      borderColor: colors.border,
+      backgroundColor: colors.surface,
+    },
+
+    //need
+    searchBar:{
+      width: "90%",
+      height: 50,
+      flex: 1,
+      color: colors.text,
+      fontSize: 25
+    },
+
+    // need
+    searchIcon: {
+      margin: 10
+    },
+
+    //need
+    noMatch: {
+      textAlign: "center",
+      fontWeight: 600,
+      fontSize: 25,
+      color: colors.text
+    },
+
+    image: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderTopLeftRadius: 25,
+      borderTopRightRadius: 55,
+      borderBottomLeftRadius: 55,
+      borderBottomRightRadius: 25,
+      marginRight: '5%',
+      marginLeft: '5%',
+      width: '90%',
+      height: 500,
+      borderColor: colors.border,
+      borderWidth: 3,
+      marginTop: '8%'
+    },
+
+    IDdescription: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: colors.text,
+    },
+
     todoActions: {
       flexDirection: "row",
       gap: 12,

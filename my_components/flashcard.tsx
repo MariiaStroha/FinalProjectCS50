@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Pressable, Animated, ScrollView, GestureResponderEvent} from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, Animated, GestureResponderEvent} from 'react-native';
+import useTheme from '../hooks/useTheme';
+import { LinearGradient } from 'expo-linear-gradient';
+import { createStyles  } from '../assets/images/styles/styles';
 
 interface FlashcardProps {
   button1: string,
@@ -12,16 +15,13 @@ interface FlashcardProps {
 }
 
 const Flashcard: React.FC<FlashcardProps> = (props: FlashcardProps) => {
+     const { colors } = useTheme();
+
+    const styles = createStyles(colors);
 
     const [ IsFlipped, setIsFlipped] = useState(false);
 
     const animation = useRef(new Animated.Value(0)).current;
-
-  /*  useEffect(() => {
-        animation.setValue(0);
-        setIsFlipped(false);
-    }, [props.name])
-    */
 
     const handleClick = () => {
         setIsFlipped(false);
@@ -62,13 +62,13 @@ const Flashcard: React.FC<FlashcardProps> = (props: FlashcardProps) => {
         <>
             <Image source={ props.image } style={styles.image}/>
             
-            <View style={styles.container}>
+            <View style={styles.FCcontainer}>
                 {/* Front side of the card. lets the user flip it */}
                 <Animated.View 
                 pointerEvents={IsFlipped ? 'none' : 'auto'}
                 style={[ styles.card, doFrontFlip]}>
                     <Pressable onPress={Flip}>
-                        <Text style={styles.text}> Flip it </Text>
+                        <Text style={styles.FCtitle}> Flip it </Text>
                     </Pressable>
                 </Animated.View>
 
@@ -76,9 +76,9 @@ const Flashcard: React.FC<FlashcardProps> = (props: FlashcardProps) => {
                 <Animated.View 
                 pointerEvents={IsFlipped ? 'auto' : 'none'}
                 style={[ styles.card, styles.backText, doBackFlip]}>
-                    <Text  style={styles.text}> {props.name} </Text>
-                    <Text> {props.description} </Text>
-                    {/* This is either i memorized it, learn it* learn or got it* review button */}
+                    <Text  style={styles.FCtitle}> {props.name} </Text>
+                    <Text style={styles.FCtext}> {props.description} </Text>
+                    {/* This is either memorized it, learn it* learn or got it* review button */}
                     <Pressable
                     onPress={(event) => {
                         props.onPress1(event);
@@ -92,61 +92,12 @@ const Flashcard: React.FC<FlashcardProps> = (props: FlashcardProps) => {
                         props.onPress2(event);
                         handleClick()
                     }}>
-                        <Text> {props.button2} </Text>
+                        <Text style={styles.buttonContainer}> {props.button2} </Text>
                     </Pressable>
                 </Animated.View>
             </View>
         </>
     );
 };
-
-const styles = StyleSheet.create({
-   container: {
-     flex: 1,
-     justifyContent: 'center'
-   },
-   text: {
-     fontSize: 20,
-     fontWeight: 'bold',
-     margin: 10
-   },
-   image: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderTopLeftRadius: 55,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 55,
-    marginRight: '5%',
-    marginLeft: '5%',
-    marginTop: '5%',
-    width: '90%',
-    height: 500,
-    borderColor: '#48cae4',
-    borderWidth: 3
-  },
-  
-  card: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-    backfaceVisibility: 'hidden',
-    width: '90%',
-  },
-  backText: {
-    position: 'absolute',
-    top: 0,
-    width: '90%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-
-  buttonContainer: {
-  backgroundColor: 'gray',
-    padding: 10,
-    borderColor: 'black',
-    borderWidth: 3
-  }
- });
 
 export default Flashcard

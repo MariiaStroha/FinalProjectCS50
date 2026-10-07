@@ -4,46 +4,42 @@ import { Text, FlatList, Pressable, View, TextInput} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {Portrait, portraits} from '../../portraits';
 import { createStyles  } from '../../assets/images/styles/styles'
-import { SearchBar } from '@rneui/themed';
 import { Search } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import useTheme from '../../hooks/useTheme';
 
 
+export default function DataBase(){
+  
+const { colors } = useTheme();
 
-/*
+const styles = createStyles(colors);
 
 const renderItems = ({item}:{item: Portrait}) =>{
   return(
-    <View style={styles.buttonWrapper}>
-            <LinearGradient
+    <LinearGradient
               colors={colors.gradients.surface}
               style={styles.button}
               start={{x: 0, y: 0}}
               end={{x: 1, y: 1}}
-              ></LinearGradient>
+              >
+    <View style={styles.buttonWrapper}>
       <Link
        href={{
           pathname: '../[id]',
           params: { id: item.id }
         }}
         asChild>
-          <Pressable >
-              <Text>{ item.name} </Text>
+          <Pressable  style={styles.buttonTextContainer}>
+              <Text style={styles.buttonText}>{ item.name} </Text>
           </Pressable>
         </Link>
       </View>
+      </LinearGradient>
   )
 }
 
-
-
-export default function DataBase(){
-  const { colors } = useTheme();
-
-  const styles = createStyles(colors);
-
-  const[search, setSearch] = useState('');
+const[search, setSearch] = useState('');
 
   const data: Portrait[] = portraits;
 
@@ -60,25 +56,29 @@ export default function DataBase(){
 
   return(
     <>
+    <LinearGradient colors={colors.gradients.background} style={styles.container}>
      <SafeAreaView>
-      <LinearGradient colors={colors.gradients.background} style={styles.container}>
-       <View>
-        <Search/>
+       <View style={styles.searchBarWrapper}>
+        <Search
+          size={25}
+          style={styles.searchIcon}
+          color={colors.textMuted}
+        />
         <TextInput
+          style={styles.searchBar}
           placeholder="Знайти портрет"
+          placeholderTextColor={colors.textMuted}
           onChangeText={update}
           value={search}
         />
       </View>
-      {result.length === 0 ? <Text>No match</Text> : 
+      {result.length === 0 ? <Text style={styles.noMatch}>No match</Text> : 
       <FlatList
           data={result }
           renderItem={renderItems}
         />}
-        </LinearGradient>
          </SafeAreaView>
+         </LinearGradient>
       </>
   )
 }
-
-*/

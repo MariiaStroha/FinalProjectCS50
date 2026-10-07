@@ -4,61 +4,46 @@ import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { Portrait, portraits } from '../portraits';
 import { Stack } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { createStyles  } from '../assets/images/styles/styles';
+import { LinearGradient } from 'expo-linear-gradient';
+import useTheme from '../hooks/useTheme';;
 
 export default function HomePage() {
+
+  const { colors } = useTheme();
+
+  const styles = createStyles(colors);
+
   let { id } =  useLocalSearchParams<{id: string}>();
   const ID = Number(id);
   const portrait = portraits.find((person: Portrait) => person.id === ID);
+
   return(
     <>
-    <SafeAreaView  style={{flex: 1}}>
+    <LinearGradient colors={colors.gradients.background} style={styles.container}>
+    <SafeAreaView  style={styles.safeArea}>
     <ScrollView>
        <Stack.Screen options={{ title: portrait?.name}}/>
-       <View style={styles.title}>
-           <Text style={styles.text}> {portrait?.name} </Text>
+       <View style={styles.titleContainer}>
+           <Text style={styles.IDtitle}> {portrait?.name} </Text>
         </View>
         <Image
           source={ portrait?.image }
           style={styles.image}
         />
-        <View style={{ margin: 15, alignItems: 'center', justifyContent: 'flex-end'}}>
-          <Text style={styles.text}>{ portrait?.description }</Text>
+        <LinearGradient
+              colors={colors.gradients.surface}
+              style={styles.button}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 1}}
+              >
+        <View style={styles.buttonTextContainer}>
+          <Text style={styles.IDdescription}>{ portrait?.description }</Text>
         </View>
+      </LinearGradient>
       </ScrollView>
       </SafeAreaView>
+      </LinearGradient>
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  title: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginBottom: 15,
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
-    padding: 20,
-    backgroundColor: '#48cae4',
-    borderTopLeftRadius: 55,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 55
-  },
-  image: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderTopLeftRadius: 55,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 55,
-    marginRight: '5%',
-    marginLeft: '5%',
-    width: '90%',
-    height: 500,
-    borderColor: '#48cae4',
-    borderWidth: 3
-  }
-});

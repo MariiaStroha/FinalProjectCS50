@@ -5,8 +5,16 @@ import Flashcard from "../my_components/flashcard";
 import { Portrait, portraits } from "../portraits";
 import { Item, loadData } from "./async_functions";
 import { leaveApp, leavePage } from "./helpers";
+import useTheme from '../hooks/useTheme';
+import { LinearGradient } from 'expo-linear-gradient';
+import { createStyles  } from '../assets/images/styles/styles';
+
 
 export default function Learn() {
+  const { colors } = useTheme();
+
+  const styles = createStyles(colors);
+
   const navigation = useNavigation();
 
   const appState = useRef(AppState.currentState);
@@ -78,32 +86,38 @@ export default function Learn() {
 
     if (values.length === 0) {
       return (
-        <View>
-          <Text>Everything is learned</Text>
-        </View>
+        <LinearGradient colors={colors.gradients.background} style={styles.container}>
+          <View>
+            <Text>Everything is learned</Text>
+          </View>
+        </LinearGradient>
       );
     }
 
     return (
-      <View style={{ flex: 1 }}>
-        <ScrollView>
-          <Flashcard
-            button1="learn it"
-            button2="learn later"
-            name={values[0].name}
-            description={values[0].description}
-            image={values[0].image}
-            onPress1={LearnIt}
-            onPress2={LearnLater}
-          />
-        </ScrollView>
-      </View>
+      <LinearGradient colors={colors.gradients.background} style={styles.container}>
+        <View style={{ flex: 1 }}>
+          <ScrollView>
+            <Flashcard
+              button1="learn it"
+              button2="learn later"
+              name={values[0].name}
+              description={values[0].description}
+              image={values[0].image}
+              onPress1={LearnIt}
+              onPress2={LearnLater}
+            />
+          </ScrollView>
+        </View>
+      </LinearGradient>
     );
   } else {
     return (
-      <View>
-        <Text>Loading</Text>
-      </View>
+      <LinearGradient colors={colors.gradients.background} style={styles.container}>
+        <View>
+          <Text>Loading</Text>
+        </View>
+      </LinearGradient>
     );
   }
 }
