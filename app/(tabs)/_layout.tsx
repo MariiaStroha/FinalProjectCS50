@@ -3,11 +3,17 @@ import useTheme from '../../hooks/useTheme'
 import { House } from 'lucide-react-native';
 import { Summary } from 'lucide-react-native';
 import { Settings } from 'lucide-react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { createStyles  } from '../../assets/images/styles/styles';
+
 
 export default function TabsLayout() {
-
   const { colors } = useTheme();
+
+  const styles = createStyles(colors);
+
   return (
+    <LinearGradient colors={colors.gradients.background} style={styles.container}>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: colors.primary,
@@ -50,5 +56,6 @@ export default function TabsLayout() {
           }}
           />
     </Tabs>
+    </LinearGradient>
   );
 }

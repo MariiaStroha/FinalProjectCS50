@@ -67,11 +67,14 @@ export const updateLearned = async(id: number, reviewedPortraits: Item[]) => {
 }
 
 export const loadData = async() => {
-  const learned = await AsyncStorage.getItem('learned');
+  try{
+    const learned = await AsyncStorage.getItem('learned');
   if(learned !== null){
     return JSON.parse(learned);
   }
   return [];
+  }catch(e){console.error(e)}
+  
 }
 
 

@@ -123,14 +123,17 @@ export default function HomePage() {
             }}
             asChild>
             <Pressable style={homeStyles.buttonTextContainer} onPress={get}>
+              <View style={homeStyles.buttonIndex}>
               <Text style={homeStyles.buttonText}> Learn new portraits </Text>
-            </Pressable>
-          </Link>
-            <Eye
+              <Eye
               size={56}
               style={homeStyles.icon}
               color={colors.text}
-            />
+            /> 
+            </View>
+            </Pressable> 
+          </Link>
+           
         </LinearGradient>
          <LinearGradient
           colors={colors.gradients.surface}
@@ -144,14 +147,16 @@ export default function HomePage() {
             }}
             asChild>
             <Pressable style={homeStyles.buttonTextContainer} onPress={get}>
-              <Text style={homeStyles.buttonText}> Review portraits </Text>
+              <View style={homeStyles.buttonIndex}>
+                <Text style={homeStyles.buttonText}> Review portraits </Text>
+                <GraduationCap
+                size={56}
+                style={[homeStyles.icon, {marginLeft: 30}]}
+                color={colors.text}
+              />
+            </View>
             </Pressable>
             </Link>
-            <GraduationCap
-              size={56}
-              style={homeStyles.icon}
-              color={colors.text}
-            />
             </LinearGradient>
             </View>
             </LinearGradient>
@@ -160,9 +165,11 @@ export default function HomePage() {
 }
 else{
   return(
-    <View>
-      <Text> Loading....</Text>
-    </View>
+    <LinearGradient colors={colors.gradients.background} style={homeStyles.container}>
+      <View style={homeStyles.containerEverythingIs}>
+        <Text style={homeStyles.textEverythingIs}> Loading....</Text>
+      </View>
+    </LinearGradient>
   )
 }
 }

@@ -1,10 +1,13 @@
 import { useNavigation } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { AppState, ScrollView, StyleSheet, Text, View } from "react-native";
+import { AppState, StyleSheet, Text, View } from "react-native";
 import Flashcard from "../my_components/flashcard";
 import { Portrait, portraits } from "../portraits";
-import { Item, loadData, loadStreak, Streak, updateStreak } from "./async_functions";
+import { Item, loadData, loadStreak, updateStreak } from "./async_functions";
 import { getDate, leaveApp, leavePage } from "./helpers";
+import useTheme from '../hooks/useTheme';
+import { LinearGradient } from 'expo-linear-gradient';
+import { createStyles  } from '../assets/images/styles/styles';
 
 // time units declaration
 const second = 1000;
@@ -14,6 +17,10 @@ const day = hour * 24;
 const week = day * 7;
 
 export default function Review() {
+  const { colors } = useTheme();
+
+  const styles = createStyles(colors);
+
   // The same logic as in learn: page shows the first item in array(usestate) and mutates the first item of the array
   // User presses got it - review date changes based on alghortim(based on its box). stores in local stotrage, then moves to async after vuser closes the page
   // User presses missed it - the card moves to box 1. gets deleted from the local array and moves to reviewed ths sess(the same for both missed it and got it)
@@ -106,9 +113,11 @@ export default function Review() {
     // If there are no cards/ evrything is reviewed
     if (toReview.length === 0) {
       return (
-        <View style={{ flex: 1 }}>
-          <Text> No review cards for now </Text>
+         <LinearGradient colors={colors.gradients.background} style={styles.container}>
+        <View style={styles.containerEverythingIs}>
+          <Text style={styles.textEverythingIs}> No review cards for now </Text>
         </View>
+        </LinearGradient>
       );
     }
 
@@ -210,8 +219,8 @@ export default function Review() {
     };
 
     return (
-      <View style={{ flex: 1 }}>
-        <ScrollView>
+      <LinearGradient colors={colors.gradients.background} style={styles.container}>
+      <View style={{flex: 1}}>
           <Flashcard
             button1="Got it"
             button2="Missed it"
@@ -221,27 +230,17 @@ export default function Review() {
             onPress1={GotIt}
             onPress2={MissedIt}
           />
-        </ScrollView>
       </View>
+      </LinearGradient>
     );
   } 
   else {
     return (
-      <View style={{ flex: 1 }}>
-        <Text> Loading.... </Text>
+       <LinearGradient colors={colors.gradients.background} style={styles.container}>
+      <View style={styles.containerEverythingIs}>
+        <Text style={styles.textEverythingIs}> Loading.... </Text>
       </View>
+      </LinearGradient>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 10,
-  },
-});

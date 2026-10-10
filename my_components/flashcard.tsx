@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Pressable, Animated, GestureResponderEvent} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { Text, View, Image, Pressable, Animated, GestureResponderEvent, ScrollView, SafeAreaView} from 'react-native';
 import useTheme from '../hooks/useTheme';
-import { LinearGradient } from 'expo-linear-gradient';
 import { createStyles  } from '../assets/images/styles/styles';
 
 interface FlashcardProps {
@@ -68,7 +67,7 @@ const Flashcard: React.FC<FlashcardProps> = (props: FlashcardProps) => {
                 pointerEvents={IsFlipped ? 'none' : 'auto'}
                 style={[ styles.card, doFrontFlip]}>
                     <Pressable onPress={Flip}>
-                        <Text style={styles.FCtitle}> Flip it </Text>
+                        <Text style={styles.flipIt}> Flip it </Text>
                     </Pressable>
                 </Animated.View>
 
@@ -79,6 +78,7 @@ const Flashcard: React.FC<FlashcardProps> = (props: FlashcardProps) => {
                     <Text  style={styles.FCtitle}> {props.name} </Text>
                     <Text style={styles.FCtext}> {props.description} </Text>
                     {/* This is either memorized it, learn it* learn or got it* review button */}
+                    <View style={styles.testcontainer}>
                     <Pressable
                     onPress={(event) => {
                         props.onPress1(event);
@@ -94,6 +94,7 @@ const Flashcard: React.FC<FlashcardProps> = (props: FlashcardProps) => {
                     }}>
                         <Text style={styles.buttonContainer}> {props.button2} </Text>
                     </Pressable>
+                    </View>
                 </Animated.View>
             </View>
         </>

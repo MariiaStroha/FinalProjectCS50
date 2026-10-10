@@ -3,15 +3,14 @@ import { StyleSheet } from "react-native";
 
 export const createStyles = (colors: ColorScheme) => {
   const styles = StyleSheet.create({
-    // need
     container: {
       flex: 1,
     },
-    //need
+    
     safeArea: {
       flex: 1,
     },
-    // need
+    
     header: {
       paddingHorizontal: 24,
       paddingVertical: 32,
@@ -23,7 +22,7 @@ export const createStyles = (colors: ColorScheme) => {
       alignItems: "center",
       marginBottom: 20,
     },
-    // need
+    
     icon: {
       width: 65,
       height: 65,
@@ -34,7 +33,7 @@ export const createStyles = (colors: ColorScheme) => {
     titleTextContainer: {
       flex: 1,
     },
-    // need
+    
     title: {
       fontSize: 40,
       fontWeight: "900",
@@ -51,21 +50,21 @@ export const createStyles = (colors: ColorScheme) => {
       marginRight: "5%"
     },
     
-    // Learn-review styles
     // FC - short for Flash Card
     FCcontainer: {
      flex: 1,
-     justifyContent: 'center'
+     alignItems: "center"
    },
    FCtitle: {
      fontSize: 22,
-     fontWeight: 600,
-     margin: 10,
-     color: colors.text
+     fontWeight: "600",
+     margin: 5,
+     color: colors.text,
+     textAlign: "center"
    },
 
    FCtext: {
-     fontSize: 18,
+     fontSize: 13,
      margin: 10,
      color: colors.text,
      textAlign: "center"
@@ -84,68 +83,28 @@ export const createStyles = (colors: ColorScheme) => {
     top: 0,
     width: '90%',
     alignItems: 'center',
-    justifyContent: 'center',
-    
+    justifyContent: 'center'
+  },
+
+  testcontainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row"
   },
 
   buttonContainer: {
   backgroundColor: colors.primary,
     padding: 10,
     borderColor: colors.border,
-    borderWidth: 3
+    borderWidth: 3,
+    width: 160,
+    textAlign: "center"
   },
     
-    inputSection: {
-      paddingHorizontal: 24,
-      paddingBottom: 12,
-    },
-    inputWrapper: {
-      flexDirection: "row",
-      alignItems: "flex-end",
-      gap: 16,
-    },
-    input: {
-      flex: 1,
-      borderWidth: 2,
-      borderRadius: 20,
-      paddingHorizontal: 20,
-      paddingVertical: 16,
-      fontSize: 17,
-      maxHeight: 120,
-      fontWeight: "500",
-      backgroundColor: colors.backgrounds.input,
-      borderColor: colors.border,
-      color: colors.text,
-    },
-    inputFocused: {
-      borderColor: colors.primary,
-    },
-    addButton: {
-      width: 56,
-      height: 56,
-      borderRadius: 28,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    addButtonDisabled: {
-      opacity: 0.5,
-    },
-    todoList: {
-      flex: 1,
-    },
-    todoListContent: {
-      paddingHorizontal: 24,
-      paddingBottom: 100,
-    },
-    emptyListContainer: {
-      flexGrow: 1,
-      justifyContent: "center",
-    },
-    // ned
     buttonWrapper: {
       marginVertical: 12,
     },
-    // need
+    
     button: {
       flexDirection: "row",
       alignItems: "flex-start",
@@ -153,22 +112,25 @@ export const createStyles = (colors: ColorScheme) => {
       borderRadius: 20,
       margin: 15
     },
-    // need
+    buttonIndex: {
+      flexDirection: "row",
+      alignItems: "flex-start"  
+    },
+    
     buttonTextContainer: {
       flex: 1,
     },
-    // need
+    
     buttonText: {
       fontSize: 25,
       lineHeight: 24,
-      fontWeight: "600",
+      fontWeight: 600,
       marginBottom: 16,
       marginTop: 16,
       marginRight: 16,
       color: colors.text,
     },
 
-    // need
     searchBarWrapper: {
       margin: 15,
       flexDirection: "row",
@@ -178,7 +140,6 @@ export const createStyles = (colors: ColorScheme) => {
       backgroundColor: colors.surface,
     },
 
-    //need
     searchBar:{
       width: "90%",
       height: 50,
@@ -187,12 +148,10 @@ export const createStyles = (colors: ColorScheme) => {
       fontSize: 25
     },
 
-    // need
     searchIcon: {
       margin: 10
     },
 
-    //need
     noMatch: {
       textAlign: "center",
       fontWeight: 600,
@@ -222,75 +181,25 @@ export const createStyles = (colors: ColorScheme) => {
       color: colors.text,
     },
 
-    todoActions: {
-      flexDirection: "row",
-      gap: 12,
-    },
-    actionButton: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    editContainer: {
-      flex: 1,
-    },
-    editInput: {
-      borderWidth: 2,
-      borderRadius: 16,
-      paddingHorizontal: 16,
-      paddingVertical: 12,
-      fontSize: 17,
-      fontWeight: "500",
-      marginBottom: 16,
-      backgroundColor: colors.backgrounds.editInput,
-      borderColor: colors.primary,
-      color: colors.text,
-    },
-    editButtons: {
-      flexDirection: "row",
-      gap: 12,
-    },
-    editButton: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 8,
-      paddingHorizontal: 16,
-      paddingVertical: 10,
-      borderRadius: 12,
-    },
-    editButtonText: {
-      color: "#ffffff",
-      fontSize: 14,
-      fontWeight: "600",
-    },
-    emptyContainer: {
-      alignItems: "center",
-      justifyContent: "center",
-      paddingVertical: 80,
-    },
-    emptyIconContainer: {
-      width: 120,
-      height: 120,
-      borderRadius: 60,
-      justifyContent: "center",
-      alignItems: "center",
-      marginBottom: 24,
-    },
-    emptyText: {
-      fontSize: 24,
-      fontWeight: "700",
-      marginBottom: 8,
-      color: colors.text,
-    },
-    emptySubtext: {
-      fontSize: 17,
-      textAlign: "center",
-      paddingHorizontal: 40,
-      lineHeight: 24,
-      color: colors.textMuted,
-    },
+   textEverythingIs: {
+    color: colors.text,
+    textAlign:"center",
+    fontSize: 25,
+    fontWeight: 600
+   },
+   containerEverythingIs: {
+    flex: 1, 
+    alignItems: "center",
+    justifyContent: "center"
+   },
+
+   flipIt: {
+    padding: 50,
+    fontSize: 28,
+     fontWeight: "900",
+     color: colors.text,
+     textAlign: "center"
+   }
   });
 
   return styles;

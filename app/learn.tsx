@@ -1,6 +1,6 @@
 import { useNavigation } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { AppState, ScrollView, StyleSheet, Text, View } from "react-native";
+import { AppState, StyleSheet, Text, View } from "react-native";
 import Flashcard from "../my_components/flashcard";
 import { Portrait, portraits } from "../portraits";
 import { Item, loadData } from "./async_functions";
@@ -87,8 +87,8 @@ export default function Learn() {
     if (values.length === 0) {
       return (
         <LinearGradient colors={colors.gradients.background} style={styles.container}>
-          <View>
-            <Text>Everything is learned</Text>
+          <View style={styles.containerEverythingIs}>
+            <Text style={styles.textEverythingIs}>Everything is learned</Text>
           </View>
         </LinearGradient>
       );
@@ -96,8 +96,7 @@ export default function Learn() {
 
     return (
       <LinearGradient colors={colors.gradients.background} style={styles.container}>
-        <View style={{ flex: 1 }}>
-          <ScrollView>
+        <View style={{flex: 1}}>     
             <Flashcard
               button1="learn it"
               button2="learn later"
@@ -106,72 +105,17 @@ export default function Learn() {
               image={values[0].image}
               onPress1={LearnIt}
               onPress2={LearnLater}
-            />
-          </ScrollView>
+            /> 
         </View>
-      </LinearGradient>
+      </LinearGradient> 
     );
   } else {
     return (
       <LinearGradient colors={colors.gradients.background} style={styles.container}>
-        <View>
-          <Text>Loading</Text>
+        <View style={styles.containerEverythingIs}>
+          <Text style={styles.textEverythingIs}>Loading</Text>
         </View>
       </LinearGradient>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 10,
-  },
-  image: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderTopLeftRadius: 55,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 55,
-    marginRight: "5%",
-    marginLeft: "5%",
-    marginTop: "5%",
-    width: "90%",
-    height: 500,
-    borderColor: "#48cae4",
-    borderWidth: 3,
-  },
-
-  card: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 20,
-    backfaceVisibility: "hidden",
-    marginRight: "5%",
-    marginLeft: "5%",
-    width: "90%",
-    height: 300,
-  },
-  backText: {
-    position: "absolute",
-    top: 0,
-    marginRight: "5%",
-    marginLeft: "5%",
-    width: "90%",
-    height: 300,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonContainer: {
-    backgroundColor: "gray",
-    padding: 10,
-    borderColor: "black",
-    borderWidth: 3,
-  },
-});
